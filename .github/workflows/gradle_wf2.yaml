@@ -20,6 +20,13 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+
   #  - name: Update Gradle Wrapper
   #    uses: gradle-update/update-gradle-wrapper-action@v2
         
@@ -38,14 +45,14 @@ jobs:
 #      with:
  #       arguments: build
         
-    - name: Build with Gradle
-      run: ./gradlew build --info
+ #   - name: Build with Gradle
+  #    run: ./gradlew build
     
       
     # Create APK Release
-#    - name: Build apk release project (APK) - ${{ env.main_project_module }} module
- #     run: ./gradlew assemble --scan
-   #   env:
- #      GITHUB_TOKEN: ${{ secrets.toketoke }}
- #      APP_FOLDER: hackerskeyboard
- #      RELEASE_TITLE: New Build
+    - name: Build apk release project (APK) - ${{ env.main_project_module }} module
+      run: ./gradlew assemble
+      env:
+       GITHUB_TOKEN: ${{ secrets.toketoke }}
+       APP_FOLDER: hackerskeyboard
+       RELEASE_TITLE: New Build
