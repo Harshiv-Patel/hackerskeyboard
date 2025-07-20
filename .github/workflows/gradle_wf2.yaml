@@ -1,9 +1,7 @@
 name: Build & Publish Debug APK
 
 on:
- push:
-  branches:
-   - master
+  workflow_dispatch:
 
 env:
   # The name of the main module repository
