@@ -38,7 +38,7 @@ jobs:
  #       arguments: build
         
     - name: Build with Gradle
-      run: ./gradlew build --scan
+      run: ./gradlew build --scan --info
     
       
     # Create APK Release
