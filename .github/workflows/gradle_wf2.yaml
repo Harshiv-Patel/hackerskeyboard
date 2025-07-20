@@ -47,5 +47,5 @@ jobs:
       run: ./gradlew assemble
       env:
        GITHUB_TOKEN: ${{ secrets.toketoke }}
-       APP_FOLDER: app
+       APP_FOLDER: hackerskeyboard
        RELEASE_TITLE: New Build
