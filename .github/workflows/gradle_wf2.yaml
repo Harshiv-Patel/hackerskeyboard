@@ -33,18 +33,18 @@ jobs:
         echo ${GRADLE_PROPERTIES} > ~/.gradle/gradle.properties
       #  gradle wrapper --gradle-version 7.6.1 --info --stacktrace --debug
       
- #   - uses: gradle/gradle-build-action@v2
- #     with:
-#      arguments: build
+    - uses: gradle/gradle-build-action@v2
+      with:
+      arguments: build
         
 #    - name: Build with Gradle
 #      run: ./gradlew build
     
       
     # Create APK Release
-    - name: Build apk release project (APK) - ${{ env.main_project_module }} module
-      run: ./gradlew assemble --scan
-      env:
-       GITHUB_TOKEN: ${{ secrets.toketoke }}
-       APP_FOLDER: hackerskeyboard
-       RELEASE_TITLE: New Build
+#    - name: Build apk release project (APK) - ${{ env.main_project_module }} module
+ #     run: ./gradlew assemble --scan
+   #   env:
+ #      GITHUB_TOKEN: ${{ secrets.toketoke }}
+ #      APP_FOLDER: hackerskeyboard
+ #      RELEASE_TITLE: New Build
