@@ -43,7 +43,7 @@ jobs:
       
     # Create APK Release
     - name: Build apk release project (APK) - ${{ env.main_project_module }} module
-      run: ./gradlew assemble --info
+      run: ./gradlew assemble --scan
       env:
        GITHUB_TOKEN: ${{ secrets.toketoke }}
        APP_FOLDER: hackerskeyboard
