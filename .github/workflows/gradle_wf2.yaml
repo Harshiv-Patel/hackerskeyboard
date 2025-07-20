@@ -31,16 +31,15 @@ jobs:
         mkdir -p ~/.gradle/
         echo "GRADLE_USER_HOME=${HOME}/.gradle" >> $GITHUB_ENV
         echo ${GRADLE_PROPERTIES} > ~/.gradle/gradle.properties
-        gradle wrapper --gradle-version 7.6.1
+        gradle wrapper --gradle-version 7.6.1 --info --stacktrace --debug
       
  #   - uses: gradle/gradle-build-action@v2
  #     with:
 #      arguments: build
         
-    - name: Build with Gradle
-      run: ./gradlew build
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug
+#    - name: Build with Gradle
+#      run: ./gradlew build
+    
       
     # Create APK Release
     - name: Build apk release project (APK) - ${{ env.main_project_module }} module
