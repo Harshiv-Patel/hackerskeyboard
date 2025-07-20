@@ -7,6 +7,10 @@
 
 name: Gradle Package
 
+env:
+  # The name of the main module repository
+  main_project_module: "Hacker's Keyboard"
+
 on:
   workflow_dispatch:
   
