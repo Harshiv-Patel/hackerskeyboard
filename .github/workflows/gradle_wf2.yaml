@@ -6,11 +6,31 @@ on:
 env:
   # The name of the main module repository
   main_project_module: "Hacker's Keyboard"
+
+# Set Current Date As Env Variable
+- name: Set current date as env variable
+        run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      # Set Repository Name As Env Variable
+      - name: Set repository name as env variable
+        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+
+      
    
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    # Set Current Date As Env Variable
+    - name: Set current date as env variable
+    run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+    # Set Repository Name As Env Variable
+    - name: Set repository name as env variable
+    run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+
+      
+    
     - uses: actions/checkout@v1
     - name: set up JDK 17
       uses: actions/setup-java@v1
@@ -49,3 +69,11 @@ jobs:
        GITHUB_TOKEN: ${{ secrets.toketoke }}
        APP_FOLDER: hackerskeyboard
        RELEASE_TITLE: New Build
+
+   # Noted For Output [main_project_module]/build/outputs/apk/release/
+    - name: Upload APK Release - ${{ env.repository_name }}
+      uses: actions/upload-artifact@v4
+      with:
+          name: ${{ env.date_today }} - ${{ env.repository_name }} - APK(s) release generated
+          path: ${{ env.main_project_module }}/build/outputs/apk/release/
+
