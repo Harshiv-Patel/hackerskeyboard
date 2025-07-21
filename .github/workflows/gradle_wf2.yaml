@@ -5,7 +5,7 @@ on:
 
 env:
   # The name of the main module repository
-  main_project_module: "Hacker's Keyboard"
+  main_project_module: "hackerskeyboard"
       
    
 jobs:
@@ -55,7 +55,7 @@ jobs:
       
     # Create APK Release
       - name: Build apk release project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assembleRelease
+        run: ./gradlew assemble
         env:
          GITHUB_TOKEN: ${{ secrets.toketoke }}
          APP_FOLDER: hackerskeyboard
@@ -66,5 +66,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK(s) release generated
-          path: ./hackerskeyboard/build/apk/
+          path: ${{ env.main_project_module }}/build/outputs/apk/release/
+
 
