@@ -49,13 +49,13 @@ jobs:
 #      with:
  #       arguments: build
         
- #   - name: Build with Gradle
-  #    run: ./gradlew build
+      - name: Build with Gradle
+        run: ./gradlew build
     
       
     # Create APK Release
       - name: Build apk release project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assemble --info
+        run: ./gradlew assemble
         env:
          GITHUB_TOKEN: ${{ secrets.toketoke }}
          APP_FOLDER: hackerskeyboard
@@ -66,5 +66,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK(s) release generated
-          path: ./dist
+          path: ./hackerskeyboard/build/apk/
 
