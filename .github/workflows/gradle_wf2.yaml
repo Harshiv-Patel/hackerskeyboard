@@ -64,7 +64,7 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: list outputs
-        run: ls ./app/; ls; ls ./app/build; ls; ls ./app/build/outputs/; ls; ls ./app/build/outputs/apk
+        run: ls ./app/; echo -e "\n="; ls ./app/build; echo -e "\n="; ls ./app/build/outputs/; echo -e "\n="; ls ./app/build/outputs/apk
 
    # Noted For Output [main_project_module]/build/outputs/apk/release/
       - name: Upload APK Release - ${{ env.repository_name }}
