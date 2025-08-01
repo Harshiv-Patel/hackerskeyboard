@@ -1,11 +1,11 @@
-name: Build a Debug APK
+name: Build a Release APK
 
 on:
   workflow_dispatch:
 
 env:
   # The name of the main module repository
-  main_project_module: "hackerskeyboard"
+  main_project_module: "app"
       
    
 jobs:
@@ -26,9 +26,7 @@ jobs:
     # Set Repository Name As Env Variable
       - name: Set repository name as env variable
         run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
-
-      
-    
+   # Set up JDK 17
       - uses: actions/checkout@v1
       - name: set up JDK 17
         uses: actions/setup-java@v1
@@ -50,16 +48,10 @@ jobs:
           mkdir -p ~/.gradle/
           echo "GRADLE_USER_HOME=${HOME}/.gradle" >> $GITHUB_ENV
           echo ${GRADLE_PROPERTIES} > ~/.gradle/gradle.properties
-      
-#    - name : build app 
-#      uses: gradle/gradle-build-action@v2
-#      with:
- #       arguments: build
         
       - name: Build with Gradle
         run: ./gradlew build --info -x lint
     
-      
     # Create APK Release
       - name: Build apk release project (APK) - ${{ env.main_project_module }} module
         run: ./gradlew assembleRelease
@@ -72,12 +64,12 @@ jobs:
          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
 
       - name: list outputs
-        run: ls ./app/build/outputs/apk/release/
+        run: ls ./app/release/
 
    # Noted For Output [main_project_module]/build/outputs/apk/release/
       - name: Upload APK Release - ${{ env.repository_name }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK(s) release generated
-          path: ./app/build/outputs/apk/release/
+          path: ./app/release/
 
