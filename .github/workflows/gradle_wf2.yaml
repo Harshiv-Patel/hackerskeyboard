@@ -56,7 +56,7 @@ jobs:
       - name: Build apk release project (APK) - ${{ env.main_project_module }} module
         run: ./gradlew assembleRelease
         env:
-         GITHUB_TOKEN: ${{ secrets.toketoke }}
+         #GITHUB_TOKEN: ${{ secrets.toketoke }}
          APP_FOLDER: hackerskeyboard
          RELEASE_TITLE: New Build
          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
@@ -64,12 +64,12 @@ jobs:
          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
 
       - name: list outputs
-        run: ls ./app/build/
+        run: ls ./app/; ls ./app/build; ls ./app/build/outputs/; ls ./app/build/outputs/apk
 
    # Noted For Output [main_project_module]/build/outputs/apk/release/
       - name: Upload APK Release - ${{ env.repository_name }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK(s) release generated
-          path: ./app/build/outputs/
+          path: ./app/build/outputs/apk
 
