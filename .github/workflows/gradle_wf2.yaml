@@ -12,6 +12,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Decode Keystore
+        env:
+            ENCODED_STRING: ${{ secrets.KEYSTORE }}
+        run: |
+            TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
+            mkdir "${TMP_KEYSTORE_FILE_PATH}"
+            echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/replaceme_base64.txt
       # Set Current Date As Env Variable
       - name: Set current date as env variable
         run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
@@ -55,18 +62,22 @@ jobs:
       
     # Create APK Release
       - name: Build apk release project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assemble
+        run: ./gradlew assembleRelease
         env:
          GITHUB_TOKEN: ${{ secrets.toketoke }}
          APP_FOLDER: hackerskeyboard
          RELEASE_TITLE: New Build
+         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
 
    # Noted For Output [main_project_module]/build/outputs/apk/release/
       - name: Upload APK Release - ${{ env.repository_name }}
+        run: ./ls ${{ env.main_project_module }}/build/outputs/apk/release/
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK(s) release generated
-          #path: ${{ env.main_project_module }}/build/outputs/apk/release/
-          path: /home/runner/work/hackerskeyboard/hackerskeyboard/build/outputs/apk/release/
+          path: ${{ env.main_project_module }}/build/outputs/apk/release/
+          #path: /home/runner/work/hackerskeyboard/hackerskeyboard/build/outputs/apk/release/
 
 
